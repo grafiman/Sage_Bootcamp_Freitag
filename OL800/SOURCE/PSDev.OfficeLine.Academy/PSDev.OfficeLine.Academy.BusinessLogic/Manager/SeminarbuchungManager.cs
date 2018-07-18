@@ -336,7 +336,7 @@ namespace PSDev.OfficeLine.Academy.BusinessLogic
                 }
                 else
                 {
-                    var ansprechpartner = new AnsprechpartnerItem();
+                    var ansprechpartner = Mandant.MainDevice.Entities.Ansprechpartner.CreateItem();
                     ansprechpartner.Adresse = adresse;
                     ansprechpartner.Nachname = nachname;
                     ansprechpartner.Vorname = vorname;

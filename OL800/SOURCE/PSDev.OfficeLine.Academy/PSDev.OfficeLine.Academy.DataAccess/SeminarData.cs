@@ -666,7 +666,7 @@ namespace PSDev.OfficeLine.Academy.DataAccess
             item.Autotelefon = ansprechpartner.Autotelefon;
             item.Briefanrede = ansprechpartner.Briefanrede;
             item.EMail = ansprechpartner.EMail;
-            if (ansprechpartner.Geburtsdatum.HasValue)
+            if (ansprechpartner.Geburtsdatum.GetValueOrDefault() > DateTime.MinValue )
             {
                 item.Geburtsdatum =  ansprechpartner.Geburtsdatum.GetValueOrDefault();
             }

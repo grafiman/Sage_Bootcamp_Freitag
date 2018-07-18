@@ -152,8 +152,8 @@ namespace PSDev.OfficeLine.Academy.Tests
         {
             var buchung = new Seminarbuchung()
             {
-                AnsprechpartnerEmail = "thomas.fritz@sage.com",
-                AnsprechpartnerNachname = "Fritz",
+                AnsprechpartnerEmail = "thomas.ostermann@sage.com",
+                AnsprechpartnerNachname = "Ostermann",
                 AnsprechpartnerVorname = "Thomas",
                 Konto = "D100000",
                 SeminarterminID = "S100001"
