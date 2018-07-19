@@ -10,3 +10,26 @@ Zusammenfassung Tag 1
 - Datenzugriff => Commands, Reader
 - IDisposable
 - Logging via TraceLog
+
+
+
+Zusammenfassung Tag 2
+=====================
+- Geschäftslogik
+	- GenericCommand
+	- GenericReader
+	- Entitäten der Sage 100
+- Beleg-Objekt Sagede.OfficeLine.Wawi.BelegEngine
+- Einstieg AppDesigner
+	- Datenquellen, Listen-Elemente und Master-Detail
+
+
+Zusammenfassung Tag 3
+=====================
+- AppDesigner
+	- Selektionselement und Datenstruktur zur Filterung
+	- Datensätze, Datenreferenzen und Datenklassen
+	- Daten-Edit-Element
+	- Multi-Data-Edit-Element
+- Validierungen Client / Server 
+- Makros im AppDesigner
