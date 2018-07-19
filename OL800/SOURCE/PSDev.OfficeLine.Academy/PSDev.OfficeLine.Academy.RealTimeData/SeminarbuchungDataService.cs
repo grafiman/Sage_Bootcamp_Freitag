@@ -248,33 +248,40 @@ namespace PSDev.OfficeLine.Academy.RealTimeData
         {
             var keys = DecodeKeys(request.Data.KeyValue);
             var bo = new PSDev.OfficeLine.Academy.DataAccess.Seminarbuchung();
-            var manager =
+            var manager = new SeminarbuchungManager(Mandant);
 
-            //Prüfen, ob der Datensatz existiert
-            if (!bo.Load(keys[0]))
+            try
+            {
+                bo = manager.GetBuchung(Convert.ToInt32(keys[0]));
+
+                //Prüfen, ob der Datensatz bereits durch einen anderen Benutzer geändert wurde
+                //und ggf. eine Konflikt-Meldung mit den aktuellen Daten zurückgeben.
+                if (bo.Timestamp.ToString().Base64Encode() != request.VersionStamp)
+                {
+                    return DataActionResult.Concurrency(GetItem(request).Data);
+                }
+
+                //UUIDs werden vom Client mitgeschickt und müssen während des Round-Trips erhalten bleiben
+                //Daten von Unterobjekten müssen zusammengeführt werden.
+                FillBo(bo, request.Data);
+                bo = manager.CreateOrUpdateBuchungsbeleg(bo);
+
+                FillDto(request.Data, bo);
+                return DataActionResult.Succeeded(request.Data);
+            }
+            catch (BuchungValidationException ex)
+            {
+                return DataActionResult.Forbidden<DataContainer>(ex.Message);
+            }
+            catch (RecordNotFoundException)
             {
                 return DataActionResult.NotFound<DataContainer>();
             }
-
-            //Prüfen, ob der Datensatz bereits durch einen anderen Benutzer geändert wurde
-            //und ggf. eine Konflikt-Meldung mit den aktuellen Daten zurückgeben.
-            if (bo.Bag.StringValues["RowVersion"].Base64Encode() != request.VersionStamp)
+            catch (Exception ex)
             {
-                return DataActionResult.Concurrency(GetItem(request).Data);
+                return DataActionResult.ServerError<DataContainer>(ex);
             }
 
-            //UUIDs werden vom Client mitgeschickt und müssen während des Round-Trips erhalten bleiben
-            //Daten von Unterobjekten müssen zusammengeführt werden.
-            FillBo(bo, request.Data);
-
-            if (!bo.Save())
-            {
-                return DataActionResult.Forbidden<DataContainer>(bo.Errors.GetDescriptionSummary());
-            }
-            bo.Load(keys[0]);
-
-            FillDto(request.Data, bo);
-            return DataActionResult.Succeeded(request.Data);
         }
 
         /// <summary>
@@ -285,11 +292,7 @@ namespace PSDev.OfficeLine.Academy.RealTimeData
         /// <remarks></remarks>
         public override DataActionResult Delete(DataActionRequest request)
         {
-            var keys = DecodeKeys(request.Key);
-            var bo = new PSDev.OfficeLine.Academy.DataAccess.Seminarbuchung(Mandant);
-            bo.Load(keys[0]);
-            bo.Delete();
-            return DataActionResult.Succeeded();
+            throw new NotImplementedException("Delete");
         }
 
         /// <summary>
@@ -300,7 +303,7 @@ namespace PSDev.OfficeLine.Academy.RealTimeData
         /// <remarks></remarks>
         public override DataServiceExecuteResponse Execute(DataServiceExecuteRequest request)
         {
-            var bo = new PSDev.OfficeLine.Academy.DataAccess.Seminarbuchung(Mandant);
+            var bo = new PSDev.OfficeLine.Academy.DataAccess.Seminarbuchung();
             FillBo(bo, request.Data);
 
             switch (request.MethodName)
@@ -346,10 +349,16 @@ namespace PSDev.OfficeLine.Academy.RealTimeData
         private static void FillDtoSeminarbuchung(DataContainer dto, PSDev.OfficeLine.Academy.DataAccess.Seminarbuchung bo)
         {
             //KeyValue und UuidValue des DTOs müssen zwingend gefüllt werden.
-            //string keys[0] = string.Empty;
-            //keys[0] = bo.Key.ToString();
-            //dto.KeyValue = EncodeKeys(keys);
-            //dto.VersionStamp = bo.RowVersion.ToString().Base64Encode();
+            var keys = new string[] { bo.BuchungID.ToString() };
+            dto.KeyValue = EncodeKeys(keys);
+            if (bo.Timestamp != null)
+            {
+                dto.VersionStamp = bo.Timestamp.ToString().Base64Encode();
+            }
+            else
+            {
+                dto.VersionStamp = string.Empty;
+            }
             ClientInfosToContainer(bo.Bag, dto);
 
             dto.Fill("BuchungID", bo.BuchungID);
@@ -372,8 +381,8 @@ namespace PSDev.OfficeLine.Academy.RealTimeData
         private static void FillBoSeminarbuchung(PSDev.OfficeLine.Academy.DataAccess.Seminarbuchung bo, DataContainer dto)
         {
             //KeyValue und UuidValue müssen zwingend im BO zwischengespeichert werden.
-            //string keys = DecodeKeys(dto.KeyValue);
-            //bo.Key = keys[0];
+            var keys = DecodeKeys(dto.KeyValue);
+            bo.BuchungID = Conversion.ToInt32(keys[0]);
             ContainerToClientInfos(bo.Bag, dto);
 
             if (dto.ContainsField("BuchungID"))
@@ -414,7 +423,7 @@ namespace PSDev.OfficeLine.Academy.RealTimeData
             }
             if (dto.ContainsField("Ansprechpartnernummer"))
             {
-                bo.Ansprechpartnernummer = Conversion.ToString(dto["Ansprechpartnernummer"], false);
+                 bo.Ansprechpartnernummer = Conversion.ToInt32(dto["Ansprechpartnernummer"]);
             }
             if (dto.ContainsField("AnsprechpartnerVorname"))
             {
