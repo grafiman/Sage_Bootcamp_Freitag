@@ -108,6 +108,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Sage\Sage 100\8.0\Shared\Sagede.OfficeLine.Wawi.Services.dll</HintPath>
     </Reference>
+    <Reference Include="Sagede.OfficeLine.Wawi.Tools, Version=8.0.0.0, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="Sagede.OfficeLine.Wawi.ValidationEngine, Version=7.1.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Sage\Office Line\7.1\Shared\Sagede.OfficeLine.Wawi.ValidationEngine.dll</HintPath>
@@ -128,6 +129,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DcmHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
