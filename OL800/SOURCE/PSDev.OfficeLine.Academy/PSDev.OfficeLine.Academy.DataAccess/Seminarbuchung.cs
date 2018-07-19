@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sagede.OfficeLine.Shared;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -82,6 +83,11 @@ namespace PSDev.OfficeLine.Academy.DataAccess
         /// Timestamp
         /// </summary>
         public byte[] Timestamp { get; set; }
+
+        /// <summary>
+        /// ParameterBag zur Speicherung der ClientInfos
+        /// </summary>
+        public ParameterBag Bag { get; set; }
 
     }
 
