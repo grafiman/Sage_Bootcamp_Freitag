@@ -309,8 +309,16 @@ namespace PSDev.OfficeLine.Academy.RealTimeData
             switch (request.MethodName)
             {
                 //Verfügbare Methoden:
-
-
+                case "UpdateAnsprechpartner":
+                    var ansprechpartner = SeminarData.GetAnsprechpartner(Mandant, bo.Ansprechpartnernummer);
+                    bo.AnsprechpartnerEmail = ansprechpartner.EMail;
+                    bo.AnsprechpartnerNachname = ansprechpartner.Nachname;
+                    bo.AnsprechpartnerVorname = ansprechpartner.Vorname;
+                    break;
+                case "UpdateKunde":
+                    var kunde = SeminarData.GetKunde(Mandant, bo.Konto);
+                    bo.KontoMatchcode = kunde.Matchcode;
+                    break;
             }
 
             //UUIDs werden vom Client mitgeschickt und müssen während des Round-Trips erhalten bleiben
@@ -423,7 +431,7 @@ namespace PSDev.OfficeLine.Academy.RealTimeData
             }
             if (dto.ContainsField("Ansprechpartnernummer"))
             {
-                 bo.Ansprechpartnernummer = Conversion.ToInt32(dto["Ansprechpartnernummer"]);
+                bo.Ansprechpartnernummer = Conversion.ToInt32(dto["Ansprechpartnernummer"]);
             }
             if (dto.ContainsField("AnsprechpartnerVorname"))
             {
