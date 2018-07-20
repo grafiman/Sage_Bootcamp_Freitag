@@ -14,7 +14,7 @@ namespace PSDev.OfficeLine.Academy.DCM
 {
     public static class DcmHelper
     {
-        private const string RelationSeminarbuchungen = "SeminarbuchungCollection";
+        public const string RelationSeminarbuchungen = "SeminarbuchungCollection";
 
         private const string UuidTag = "$uuid";
         private const string IsDirtyTag = "IsDirty";
