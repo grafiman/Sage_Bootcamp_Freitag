@@ -10,6 +10,14 @@ namespace PSDev.OfficeLine.Academy.DataAccess
     public class Seminarbuchung
     {
         /// <summary>
+        /// Konstruktor
+        /// </summary>
+        public Seminarbuchung()
+        {
+            Bag = new ParameterBag();
+        }
+
+        /// <summary>
         /// BuchungID
         /// </summary>
         public int BuchungID { get; set; }

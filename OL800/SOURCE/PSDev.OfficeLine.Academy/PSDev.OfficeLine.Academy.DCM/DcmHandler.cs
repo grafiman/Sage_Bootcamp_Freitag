@@ -20,20 +20,24 @@ namespace PSDev.OfficeLine.Academy.DCM
                 {
 
                     case DcmDefinitionManager.DcmListId.VKBelegPositionProxyBelegPositionToContainerPosition:
-                        var myContext = (Sagede.OfficeLine.Wawi.BelegProxyEngine.DcmContextBelegPositionProxyBelegPositionToContainerPosition)context;
-
-                        myContext.DataContainerPosition.SetChild<DataContainerSet>(myContext.Position.BelegPositionToContainer(), DcmHelper.RelationSeminarbuchungen);
+                        handleBelegPositionToContainerposition(context);
                         break;
 
                     case DcmDefinitionManager.DcmListId.VKBelegPositionProxyContainerPositionToBelegPosition:
-                        var myContext2 = (Sagede.OfficeLine.Wawi.BelegProxyEngine.DcmContextBelegPositionProxyContainerPositionToBelegPosition)context;
-                        var seminarbuchungen = new Seminarbuchungen();
-                        seminarbuchungen.FromDataContainer(myContext2.DataContainerPosition);
-                        myContext2.Position.DCMProperties.ObjectValues[DcmHelper.RelationSeminarbuchungen] = seminarbuchungen;
+                        handleContainerPositionToBelegPosition(context);
                         break;
 
                     case DcmDefinitionManager.DcmListId.VKBelegLoad:
                         handleVKBelegLoad(context);
+                        break;
+
+                    case DcmDefinitionManager.DcmListId.VKBelegSave:
+                        handleVKBelegSave(context);
+                        break;
+
+                    case DcmDefinitionManager.DcmListId.VKBelegDelete:
+                        var vkBelegDeleteContext = (Sagede.OfficeLine.Wawi.BelegEngine.DcmContextBeleg)context;
+
                         break;
 
                     default:
@@ -51,6 +55,35 @@ namespace PSDev.OfficeLine.Academy.DCM
 
 
 
+        }
+
+        private static void handleVKBelegSave(IDcmContext context)
+        {
+            var vkBelegSaveContext = (Sagede.OfficeLine.Wawi.BelegEngine.DcmContextBeleg)context;
+
+            vkBelegSaveContext.Beleg.Positionen.ForEach(p =>
+            {
+                p.ExecuteSeminarbuchungen(vkBelegSaveContext.Mandant);
+            });
+
+            vkBelegSaveContext.Beleg.PositionenDeleted.ForEach(p =>
+            {
+                p.DeleteSeminarbuchungen(vkBelegSaveContext.Mandant);
+            });
+        }
+
+        private static void handleBelegPositionToContainerposition(IDcmContext context)
+        {
+            var myContext = (Sagede.OfficeLine.Wawi.BelegProxyEngine.DcmContextBelegPositionProxyBelegPositionToContainerPosition)context;
+            myContext.DataContainerPosition.SetChild<DataContainerSet>(myContext.Position.BelegPositionToContainer(), DcmHelper.RelationSeminarbuchungen);
+        }
+
+        private static void handleContainerPositionToBelegPosition(IDcmContext context)
+        {
+            var myContext2 = (Sagede.OfficeLine.Wawi.BelegProxyEngine.DcmContextBelegPositionProxyContainerPositionToBelegPosition)context;
+            var seminarbuchungen = new Seminarbuchungen();
+            seminarbuchungen.FromDataContainer(myContext2.DataContainerPosition);
+            myContext2.Position.DCMProperties.ObjectValues[DcmHelper.RelationSeminarbuchungen] = seminarbuchungen;
         }
 
         private static void handleVKBelegLoad(IDcmContext context)

@@ -9,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Sagede.Shared.RealTimeData.Common.Utilities;
+using PSDev.OfficeLine.Academy.BusinessLogic;
+using Sagede.OfficeLine.Engine;
 
 namespace PSDev.OfficeLine.Academy.DCM
 {
@@ -153,6 +155,53 @@ namespace PSDev.OfficeLine.Academy.DCM
 
         }
 
+        public static Seminarbuchungen GetSeminarbuchungen(this BelegPosition item)
+        {
+            if (item.DCMProperties.ExistParameter(RelationSeminarbuchungen))
+            {
+                return (Seminarbuchungen)item.DCMProperties.ObjectValues[RelationSeminarbuchungen];
+            }
+            return new Seminarbuchungen();
+
+        }
+
+        public static void ExecuteSeminarbuchungen(this BelegPosition item, Mandant mandant)
+        {
+
+            var manager = new SeminarbuchungManager(mandant);
+            var buchungen = item.GetSeminarbuchungen();
+            var isDeleted = false;
+            buchungen.ForEach(b =>
+            {
+                if (b.Bag.ExistParameter(IsDeletedTag)) { isDeleted = ConversionHelper.ToBoolean(b.Bag.ShortValues[IsDeletedTag]); }
+
+                if (!isDeleted)
+                {
+                    if (b.BelID == 0) { b.BelID = item.Parent.Handle; }
+                    if (b.VorPosID == 0) { b.VorPosID = item.VorgangspositionsHandle; }
+                    if (b.BelPosID == 0) { b.BelPosID = item.Handle; }
+                    if (string.IsNullOrWhiteSpace(b.Konto)) { b.Konto = item.Parent.A0Konto; }
+                    if (string.IsNullOrWhiteSpace(b.KontoMatchcode)) { b.KontoMatchcode = item.Parent.A0Matchcode; }
+                    manager.UpdateBuchung(b);
+                }
+                else
+                {
+                    manager.DeleteBuchung(b.BuchungID);
+                }
+
+            });
+            item.DCMProperties.ObjectValues[RelationSeminarbuchungen] = buchungen;
+
+        }
+
+        public static void DeleteSeminarbuchungen(this BelegPosition item, Mandant mandant)
+        {
+            var manager = new SeminarbuchungManager(mandant);
+            var buchungen = item.GetSeminarbuchungen();
+            buchungen.ForEach(b => manager.DeleteBuchung(b.BuchungID));
+
+        }
+
         private static void ClientInfosToContainer(ParameterBag bag, DataContainer dto)
         {
             if (bag == null)
@@ -225,6 +274,8 @@ namespace PSDev.OfficeLine.Academy.DCM
             bool isDeleted = (dto.State == DataContainerState.Deleted);
             bag.ShortValues[IsDeletedTag] = Convert.ToInt16(isDeleted);
         }
+
+
 
 
     }
