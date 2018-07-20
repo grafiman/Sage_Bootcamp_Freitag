@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PSDev.OfficeLine.Academy.BusinessLogic;
 using PSDev.OfficeLine.Academy.DataAccess;
+using Sagede.Core.Data;
 using Sagede.OfficeLine.Shared.Customizing;
 
 namespace PSDev.OfficeLine.Academy.DCM
@@ -17,20 +18,22 @@ namespace PSDev.OfficeLine.Academy.DCM
             {
                 switch (context.ListId)
                 {
+
+                    case DcmDefinitionManager.DcmListId.VKBelegPositionProxyBelegPositionToContainerPosition:
+                        var myContext = (Sagede.OfficeLine.Wawi.BelegProxyEngine.DcmContextBelegPositionProxyBelegPositionToContainerPosition)context;
+
+                        myContext.DataContainerPosition.SetChild<DataContainerSet>(myContext.Position.BelegPositionToContainer(), DcmHelper.RelationSeminarbuchungen);
+                        break;
+
+                    case DcmDefinitionManager.DcmListId.VKBelegPositionProxyContainerPositionToBelegPosition:
+                        var myContext2 = (Sagede.OfficeLine.Wawi.BelegProxyEngine.DcmContextBelegPositionProxyContainerPositionToBelegPosition)context;
+                        var seminarbuchungen = new Seminarbuchungen();
+                        seminarbuchungen.FromDataContainer(myContext2.DataContainerPosition);
+                        myContext2.Position.DCMProperties.ObjectValues[DcmHelper.RelationSeminarbuchungen] = seminarbuchungen;
+                        break;
+
                     case DcmDefinitionManager.DcmListId.VKBelegLoad:
-
-                        var vkBelegLoadContext = (Sagede.OfficeLine.Wawi.BelegEngine.DcmContextBeleg)context;
-                        var manager = new SeminarbuchungManager(vkBelegLoadContext.Mandant);
-
-                        vkBelegLoadContext.Beleg.Positionen.Where(p => p.Positionstyp == Sagede.OfficeLine.Wawi.Tools.Positionstyp.Artikel).ToList().ForEach(p =>
-                        {
-                            var buchungen = manager.GetBuchungen(p.VorgangspositionsHandle);
-                            if (buchungen.Count > 0)
-                            {
-                                p.DCMProperties.ObjectValues["Seminarbuchungen"] = buchungen;
-                            }
-                        });
-
+                        handleVKBelegLoad(context);
                         break;
 
                     default:
@@ -48,6 +51,21 @@ namespace PSDev.OfficeLine.Academy.DCM
 
 
 
+        }
+
+        private static void handleVKBelegLoad(IDcmContext context)
+        {
+            var vkBelegLoadContext = (Sagede.OfficeLine.Wawi.BelegEngine.DcmContextBeleg)context;
+            var manager = new SeminarbuchungManager(vkBelegLoadContext.Mandant);
+
+            vkBelegLoadContext.Beleg.Positionen.Where(p => p.Positionstyp == Sagede.OfficeLine.Wawi.Tools.Positionstyp.Artikel).ToList().ForEach(p =>
+            {
+                var buchungen = manager.GetBuchungen(p.VorgangspositionsHandle);
+                if (buchungen.Count > 0)
+                {
+                    p.DCMProperties.ObjectValues[DcmHelper.RelationSeminarbuchungen] = buchungen;
+                }
+            });
         }
     }
 }

@@ -119,6 +119,10 @@
       <HintPath>..\..\..\..\..\Windows\Microsoft.NET\assembly\GAC_32\Sagede.Shared.Core\v4.0_5.0.0.0__4ad8971889b881a9\Sagede.Shared.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Sagede.Shared.RealTimeData.Common, Version=8.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Sage\Sage 100\8.0\Shared\Sagede.Shared.RealTimeData.Common.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -130,6 +134,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DcmHandler.cs" />
+    <Compile Include="DcmHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
