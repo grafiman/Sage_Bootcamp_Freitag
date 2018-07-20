@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="SDataEndpoint" Type="System.String" Scope="User">
-      <Value Profile="(Default)">https://HAL9000-VM01:5493/sdata/ol/{0}/{1};{2}/</Value>
+      <Value Profile="(Default)">https://SagePS:5493/sdata/ol/{0}/{1};{2}/</Value>
     </Setting>
     <Setting Name="Datenbank" Type="System.String" Scope="Application">
       <Value Profile="(Default)">OLDemoReweAbfD</Value>
@@ -15,10 +15,10 @@
       <Value Profile="(Default)">MasterData</Value>
     </Setting>
     <Setting Name="Rechnername" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">HAL9000-VM01</Value>
+      <Value Profile="(Default)">SagePS</Value>
     </Setting>
     <Setting Name="Partname" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">ediBuchungserfassung.100096740.Academy</Value>
+      <Value Profile="(Default)">ediSeminarbuchung.100096740.Academy</Value>
     </Setting>
   </Settings>
 </SettingsFile>

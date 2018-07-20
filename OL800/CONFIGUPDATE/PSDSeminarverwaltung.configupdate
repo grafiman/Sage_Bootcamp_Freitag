@@ -1,0 +1,11 @@
+~Owner="PSDEV Seminarverwaltung"
+
+~Revision="1"
+~Insert = "/configuration/Office_x0020_Line/admin/update/reweabf"
+<_x0030_5000_psdev_0001>
+	<add name="Type" value="0" type="string" />
+	<add name="Name" value="PSDSeminarverwaltung80" type="string" />
+	<add name="Version" value="2" type="string" />
+	<add name="File" value="PSDSeminarverwaltung80.upd" type="string" />
+	<add name="Desc" value="Seminarverwaltung Schritt 1 (8.0.1)" type="string" />
+</_x0030_5000_psdev_0001>

@@ -37,25 +37,23 @@ Name: "german"; MessagesFile: "compiler:Languages\German.isl"
 ; Source: "FILES\ADDIN\OLAbfSeminarverwaltung71.mde"; DestDir: "{app}\Addin"; Flags: 32bit overwritereadonly ignoreversion
 ; Source: "FILES\ADDIN\OLAbfSeminarverwaltung71.mde"; DestDir: "{app}\Addin\Work"; Flags: 32bit overwritereadonly ignoreversion
 
-Source: "FILES\SHARED\AutoMapper.dll"; DestDir: "{app}\Shared"; Flags: 32bit overwritereadonly ignoreversion
-Source: "FILES\SHARED\EntityFramework.dll"; DestDir: "{app}\Shared"; Flags: 32bit overwritereadonly ignoreversion
-Source: "FILES\SHARED\EntityFramework.SqlServer.dll"; DestDir: "{app}\Shared"; Flags: 32bit overwritereadonly ignoreversion
 
 Source: "FILES\SHARED\PSDev.OfficeLine.Academy.BusinessLogic.dll"; DestDir: "{app}\Shared"; Flags: 32bit overwritereadonly ignoreversion
 Source: "FILES\SHARED\PSDev.OfficeLine.Academy.DataAccess.dll"; DestDir: "{app}\Shared"; Flags: 32bit overwritereadonly ignoreversion
 Source: "FILES\SHARED\PSDev.OfficeLine.Academy.RealTimeData.dll"; DestDir: "{app}\Shared"; Flags: 32bit overwritereadonly ignoreversion
-Source: "FILES\SHARED\PSDev.OfficeLine.Academy.SOAP.Contract.dll"; DestDir: "{app}\Shared"; Flags: 32bit overwritereadonly ignoreversion
-Source: "FILES\SHARED\PSDev.OfficeLine.Academy.SOAP.Implementation.dll"; DestDir: "{app}\Shared"; Flags: 32bit overwritereadonly ignoreversion
+Source: "FILES\SHARED\PSDev.OfficeLine.Academy.DCM.dll"; DestDir: "{app}\Shared"; Flags: 32bit overwritereadonly ignoreversion
 ; Source: "FILES\SHARED\OLAbfISeminar.dll"; DestDir: "{app}\Shared"; Flags: 32bit regserver overwritereadonly ignoreversion
 
 Source: "FILES\CAS\PSDSeminarverwaltung.OLKey"; DestDir: "{app}"; Flags: 32bit overwritereadonly ignoreversion
-Source: "FILES\METADATA\100096740.Academy.metadata"; DestDir: "{app}\Metadata"; Flags: 32bit overwritereadonly ignoreversion
-Source: "FILES\METADATA\100096740.AcademyReporting.metadata"; DestDir: "{app}\Metadata"; Flags: 32bit overwritereadonly ignoreversion
+Source: "FILES\METADATA\100096740.Academy.802.metadata"; DestDir: "{app}\Metadata"; Flags: 32bit overwritereadonly ignoreversion
+Source: "FILES\METADATA\100096740.AcademyReporting.802.metadata"; DestDir: "{app}\Metadata"; Flags: 32bit overwritereadonly ignoreversion
 
-Source: "FILES\DBADMIN\PSDSeminarverwaltung71.upd"; DestDir: "{app}\DBAdmin\Update\90\ReweAbf"; Flags: 32bit overwritereadonly ignoreversion
-Source: "FILES\DBADMIN\PSDSeminarverwaltung71.upd"; DestDir: "{app}\DBAdmin\Update\100\ReweAbf"; Flags: 32bit overwritereadonly ignoreversion
-Source: "FILES\DBADMIN\PSDSeminarverwaltung71.upd"; DestDir: "{app}\DBAdmin\Update\110\ReweAbf"; Flags: 32bit overwritereadonly ignoreversion
-Source: "FILES\DBADMIN\PSDSeminarverwaltung71.upd"; DestDir: "{app}\DBAdmin\Update\120\ReweAbf"; Flags: 32bit overwritereadonly ignoreversion
+Source: "FILES\DBADMIN\PSDSeminarverwaltung80.upd"; DestDir: "{app}\DBAdmin\Update\90\ReweAbf"; Flags: 32bit overwritereadonly ignoreversion
+Source: "FILES\DBADMIN\PSDSeminarverwaltung80.upd"; DestDir: "{app}\DBAdmin\Update\100\ReweAbf"; Flags: 32bit overwritereadonly ignoreversion
+Source: "FILES\DBADMIN\PSDSeminarverwaltung80.upd"; DestDir: "{app}\DBAdmin\Update\110\ReweAbf"; Flags: 32bit overwritereadonly ignoreversion
+Source: "FILES\DBADMIN\PSDSeminarverwaltung80.upd"; DestDir: "{app}\DBAdmin\Update\120\ReweAbf"; Flags: 32bit overwritereadonly ignoreversion
+Source: "FILES\DBADMIN\PSDSeminarverwaltung80.upd"; DestDir: "{app}\DBAdmin\Update\130\ReweAbf"; Flags: 32bit overwritereadonly ignoreversion
+Source: "FILES\DBADMIN\PSDSeminarverwaltung80.upd"; DestDir: "{app}\DBAdmin\Update\140\ReweAbf"; Flags: 32bit overwritereadonly ignoreversion
 
 ; Programme\Sage\Office Line\5.0\Shared
 ; Kopieren der ConfigUpdate-Dateien in das Shared\ConfigUpdates-Verzeichnis
@@ -64,14 +62,14 @@ Source: "FILES\CONFIGUPDATE\PSDSeminarverwaltung.configupdate"; DestDir: "{app}\
 [Registry]
 
 [Run]
-Filename: "{app}\Shared\Sagede.Shared.UpdateConfigTool.exe"; Parameters: "7.1"
+Filename: "{app}\Shared\Sagede.Shared.UpdateConfigTool.exe"; Parameters: "8.0"
 ; Filename: "{win}\Microsoft.NET\Framework\v4.0.30319\regasm.exe"; Parameters: """{app}\Shared\PSDev.OfficeLine.Academy.Interop.dll"" /Codebase /silent"
-Filename: "{app}\Shared\Sagede.Shared.RealTimeData.Metadata.Exchange.exe"; Parameters: "/action=import /inputfile=Metadata\100096740.Academy.metadata"; Flags: waituntilterminated
-Filename: "{app}\Shared\Sagede.Shared.RealTimeData.Metadata.Exchange.exe"; Parameters: "/action=import /inputfile=Metadata\100096740.AcademyReporting.metadata"; Flags: waituntilterminated
+Filename: "{app}\Shared\Sagede.Shared.RealTimeData.Metadata.Exchange.exe"; Parameters: "/action=import /inputfile=Metadata\100096740.Academy.802.metadata"; Flags: waituntilterminated
+Filename: "{app}\Shared\Sagede.Shared.RealTimeData.Metadata.Exchange.exe"; Parameters: "/action=import /inputfile=Metadata\100096740.AcademyReporting.802.metadata"; Flags: waituntilterminated
 
 [UninstallRun]
-Filename: "{app}\Shared\Sagede.Shared.RealTimeData.Metadata.Exchange.exe"; Parameters: "/action=delete /inputfile=Metadata\100096740.Academy.metadata"; Flags: waituntilterminated
-Filename: "{app}\Shared\Sagede.Shared.RealTimeData.Metadata.Exchange.exe"; Parameters: "/action=delete /inputfile=Metadata\100096740.AcademyReporting.metadata"; Flags: waituntilterminated
+Filename: "{app}\Shared\Sagede.Shared.RealTimeData.Metadata.Exchange.exe"; Parameters: "/action=delete /inputfile=Metadata\100096740.Academy.802.metadata"; Flags: waituntilterminated
+Filename: "{app}\Shared\Sagede.Shared.RealTimeData.Metadata.Exchange.exe"; Parameters: "/action=delete /inputfile=Metadata\100096740.AcademyReporting.802.metadata"; Flags: waituntilterminated
 
 
 [Code]

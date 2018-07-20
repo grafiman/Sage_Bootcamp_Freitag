@@ -54,8 +54,8 @@ namespace WinFormsSDataClient
                 this.textBoxKonto.Text = buchung.Konto;
                 this.textBoxNachname.Text = buchung.AnsprechpartnerNachname;
                 this.textVorname.Text = buchung.AnsprechpartnerVorname;
-                this.textBoxBuchungsID.Text = buchung.BuchungsID.ToString();
-                this.textBoxReferenz.Text = string.Format("{0}/{1}/{2}", buchung.BuchungsID, buchung.BelID, buchung.BelPosID);
+                this.textBoxBuchungsID.Text = buchung.BuchungID.ToString();
+                this.textBoxReferenz.Text = string.Format("{0}/{1}/{2}", buchung.BuchungID, buchung.BelID, buchung.BelPosID);
                 this.textBoxSeminar.Text = buchung.SeminarterminId;
                 buchung.UuidValue = System.Guid.NewGuid().ToString();
                 buchung.VersionStamp = string.Empty;
@@ -74,17 +74,17 @@ namespace WinFormsSDataClient
                 {
                     AnsprechpartnerEmail = this.textBoxEmail.Text,
                     AnsprechpartnerNachname = this.textBoxNachname.Text,
-                    AnsprechpartnerVorname = this.textBoxNachname.Text,
+                    AnsprechpartnerVorname = this.textVorname.Text,
                     Konto = this.textBoxKonto.Text,
                     SeminarterminId = this.textBoxSeminar.Text,
-                    BuchungsID = ConversionHelper.ToInt32(this.textBoxBuchungsID.Text)
+                    BuchungID = ConversionHelper.ToInt32(this.textBoxBuchungsID.Text)
                 };
 
                 var result = _contract.Resource("strSeminarbuchung.100096740.Academy").
                     CreateAsDataContainer<Seminarbuchung>(string.Empty, buchung, true, ToDictionary(_headers, x => x.Key, x => x.Value)).Data;
 
-                this.textBoxBuchungsID.Text = result.BuchungsID.ToString();
-                this.textBoxReferenz.Text = string.Format("{0}/{1}/{2}", result.BuchungsID, result.BelID, result.BelPosID);
+                this.textBoxBuchungsID.Text = result.BuchungID.ToString();
+                this.textBoxReferenz.Text = string.Format("{0}/{1}/{2}", result.BuchungID, result.BelID, result.BelPosID);
             }
             catch (Exception ex)
             {

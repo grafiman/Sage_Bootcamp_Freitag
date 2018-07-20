@@ -14,10 +14,10 @@ namespace WinFormsSDataClient
         /// <summary>
         /// BuchungsID
         /// </summary>
-        public int BuchungsID
+        public int BuchungID
         {
-            get { return GetValue<int>("BuchungsID"); }
-            set { base["BuchungsID"] = value; }
+            get { return GetValue<int>("BuchungID"); }
+            set { base["BuchungID"] = value; }
         }
 
         /// <summary>

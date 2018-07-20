@@ -1067,7 +1067,7 @@ GO
 
 /* Formatierung der SeminarterminID festlegen und im Administrator verfügbar machen */
 /* ACHTUNG: Hier ist die Mandantennummer explizit angegeben! */
-INSERT INTO KHKMandanten (Eigenschaft, Jahr, Mandant, Bezeichnung, Wert, Typ, Cache, Attribs) VALUES (460, 0, 123, 'Seminartermin', 'Mask:="@@@@@@@@"; Presets:="S"; Shortcuts:=""; Lwb:=""; Upb:=""; Length:="20"; Group:="0"', 8, -1, 0) 
+INSERT INTO KHKMandanten (Eigenschaft, Jahr, Mandant, Bezeichnung, Wert, Typ, Cache, Attribs) VALUES (460, 0, 123, 'Seminartermin', 'Mask:="######"; Presets:="S"; Shortcuts:=""; Lwb:=""; Upb:=""; Length:="20"; Group:="0"', 8, -1, 0) 
 GO
 
 INSERT INTO USysCatalog ([Table], Revision) VALUES ('PSDSeminartermine', 1)
@@ -1081,5 +1081,5 @@ GO
 
 
 /* Eintrag in USysSetup nach Ausführung des Updates */
-INSERT INTO USysSetup ([Tree],[Token],[Property],[Value]) VALUES ('Admin','Update','Seminarverwaltung','1')
+INSERT INTO USysSetup ([Tree],[Token],[Property],[Value]) VALUES ('Admin','Update','PSDSeminarverwaltung80','1')
 GO
